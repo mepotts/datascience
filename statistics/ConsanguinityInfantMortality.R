@@ -1,8 +1,5 @@
 
-
-file = "C:/Users/mpotts/Dropbox/UC Berkeley/Exploring and Analyzing Data/Lab1/Lab1Spring2016/GDP_World_Bank.csv"
-
-read.csv(file, header = TRUE) -> wbGDP
+read.csv("https://raw.githubusercontent.com/mepotts/datascience/master/datasets/GDP_World_Bank.csv", header = TRUE) -> wbGDP
 
 # Create the gdp_growth variable that is the nominal increase in GDP from 2011 to 2012
 wbGDP$gdp_growth <- wbGDP$gdp2012 - wbGDP$gdp2011
@@ -40,8 +37,7 @@ consan$Country[consan$Country == "Yemen"] <- "Yemen, Rep."
 consan$match <- NULL
 
 # Load infant mortality data from the World Bank (Children under 5 and per 1000 individuals)
-file <- "C:/Users/mpotts/Downloads/Data_Extract_From_World_Development_Indicators/Data_Extract_From_World_Development_Indicators_Data.csv"
-mortality <- read.csv(file = file, header = TRUE)
+mortality <- read.csv("https://raw.githubusercontent.com/mepotts/datascience/master/datasets/Data_Extract_From_World_Development_Indicators_Data.csv", header = TRUE)
 
 # Merge the World Bank data sets with the Consanguineous data.
 merge <- merge(x = wbGDP, y = consan, all.y = TRUE, by = "Country")
