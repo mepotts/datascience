@@ -1,4 +1,4 @@
-
+# Grab World Bank GDP data
 read.csv("https://raw.githubusercontent.com/mepotts/datascience/master/datasets/GDP_World_Bank.csv", header = TRUE) -> wbGDP
 
 # Create the gdp_growth variable that is the nominal increase in GDP from 2011 to 2012
