@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Mar 25 11:39:52 2018
-
+This is a simplification where I removed most functions to understand the model.
+The code is pulled from this implementation
+https://github.com/streamride/CapsNet-keras-imdb
 @author: matthewpotts
 """
 
@@ -57,15 +59,20 @@ y_test = to_categorical(y_test.astype('float32'))
 x = layers.Input(shape=(maxlen,))
 embed = layers.Embedding(max_features, embed_dim, input_length=maxlen)(x)
 
-conv1 = layers.Conv1D(filters=256, kernel_size=9, strides=1, padding='valid', activation='relu', name='conv1')(embed)
+conv1 = layers.Conv1D(filters=256, kernel_size=9, strides=1, padding='valid', 
+                      activation='relu', name='conv1')(embed)
 
-# Layer 2: Conv2D layer with `squash` activation, then reshape to [None, num_capsule, dim_vector]
-primarycaps = PrimaryCap(conv1, dim_vector=8, n_channels=32, kernel_size=9, strides=2, padding='valid')
+# Layer 2: Conv2D layer with `squash` activation, then reshape to 
+# [None, num_capsule, dim_vector]
+primarycaps = PrimaryCap(conv1, dim_vector=8, n_channels=32, kernel_size=9, 
+                         strides=2, padding='valid')
 
 # Layer 3: Capsule layer. Routing algorithm works here.
-digitcaps = CapsuleLayer(num_capsule=n_class, dim_vector=16, num_routing=num_routing, name='digitcaps')(primarycaps)
+digitcaps = CapsuleLayer(num_capsule=n_class, dim_vector=16, 
+                         num_routing=num_routing, name='digitcaps')(primarycaps)
 
-# Layer 4: This is an auxiliary layer to replace each capsule with its length. Just to match the true label's shape.
+# Layer 4: This is an auxiliary layer to replace each capsule with its length. 
+# Just to match the true label's shape.
 # If using tensorflow, this will not be necessary. :)
 out_caps = Length(name='out_caps')(digitcaps)
 
@@ -81,13 +88,17 @@ capsmodel = models.Model([x, y], [out_caps, x_recon])
 
 #Saving weights and logging
 log = callbacks.CSVLogger(save_dir + '/log.csv')
-tb = callbacks.TensorBoard(log_dir=save_dir + '/tensorboard-logs', batch_size=batch_size, histogram_freq=debug)
-checkpoint = callbacks.ModelCheckpoint(save_dir + '/weights-{epoch:02d}.h5', save_best_only=True, save_weights_only=True, verbose=1)
+tb = callbacks.TensorBoard(log_dir=save_dir + '/tensorboard-logs', 
+                           batch_size=batch_size, histogram_freq=debug)
+checkpoint = callbacks.ModelCheckpoint(save_dir + '/weights-{epoch:02d}.h5', 
+                                       save_best_only=True, 
+                                       save_weights_only=True, 
+                                       verbose=1)
 lr_decay = callbacks.LearningRateScheduler(schedule=lambda epoch: 0.001 * np.exp(-epoch / 10.))
 
 #margin_loss
 def margin_loss(y_true, y_pred):
-    L = y_true * K.square(K.maximum(0., 0.9 - y_pred)) + 0.5 * (1 - y_true) * K.square(K.maximum(0., y_pred - 0.1))
+    L = y_true * K.square(K.maximum(0., 0.9 - y_pred)) + 0.5 * (1 - y_true) *  K.square(K.maximum(0., y_pred - 0.1))
     return K.mean(K.sum(L, 1))
 
 capsmodel.summary()
@@ -102,7 +113,9 @@ capsmodel.compile(optimizer='adam',
               metrics={'out_caps': 'accuracy'})
 
 # train the model
-capsmodel.fit([x_train, y_train], [y_train, x_train], batch_size=batch_size, epochs=epochs, validation_data=[[x_test, y_test], [y_test, x_test]], callbacks=[log, tb, checkpoint], verbose=1)
+capsmodel.fit([x_train, y_train], [y_train, x_train], batch_size=batch_size, 
+              epochs=epochs, validation_data=[[x_test, y_test], [y_test, x_test]], 
+              callbacks=[log, tb, checkpoint], verbose=1)
 
 
 #capsmodel.save_weights(save_dir + '/trained_model.h5')
