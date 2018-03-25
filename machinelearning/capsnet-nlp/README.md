@@ -11,9 +11,11 @@ This implementation is fork of https://github.com/streamride/CapsNet-keras-imdb 
 **Step 1.**
 Install dependencies:
 
-`$ pip install keras`
-`$ pip install pydot`
-`$ pip install pydot_ng`
+```
+$ pip install keras
+$ pip install pydot
+$ pip install pydot_ng
+```
 
 **Step 2.** 
 Clone this repository with ``git``.
