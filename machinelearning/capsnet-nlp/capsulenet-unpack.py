@@ -25,7 +25,7 @@ from keras.utils import to_categorical
 from keras.datasets import reuters
 from keras.datasets import imdb
 
-# capsule layers from Xieguo Feng 
+# capsule layers from Xifeng Guo 
 # https://github.com/XifengGuo/CapsNet-Keras
 from capsulelayers import CapsuleLayer, PrimaryCap, Length, Mask
 
