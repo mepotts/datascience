@@ -1,5 +1,5 @@
 ## NOTE
-This implementation is fork of https://github.com/streamride/CapsNet-keras-imdb , applied to Keras Reuters newswire topics.
+This implementation is fork of https://github.com/streamride/CapsNet-keras-imdb , applied to Keras' Reuters newswire topics dataset.
 
 ## Requirements
 - [Keras](https://github.com/fchollet/keras) 
