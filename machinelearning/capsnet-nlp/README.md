@@ -22,12 +22,12 @@ $ pip install pydot_ng
 Clone this repository with ``git``.
 
 ```
-$ git clone https://github.com/streamride/CapsNet-keras-imdb.git
-$ cd CapsNet-Keras
+$ git clone https://github.com/mepotts/datascience/tree/master/machinelearning/capsnet-nlp.git
+$ cd capsnet-nlp
 ```
 
 **Step 3.** 
 Training:
 ```
-$ python capsulenet.py
+$ python capsulenet-unpack.py
 ```
