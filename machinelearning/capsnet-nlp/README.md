@@ -4,6 +4,7 @@ This implementation is fork of https://github.com/streamride/CapsNet-keras-imdb 
 ## Requirements
 - [Keras](https://github.com/fchollet/keras) 
 - matplotlib
+- pydot, pydot_ng, graphviz
 
 ## Usage
 
